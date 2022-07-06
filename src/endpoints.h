@@ -1,10 +1,10 @@
 #include <ESPAsyncWebServer.h>
 #include <form.h>
+#include <servoFunctions.h>
 
 
 const char* PARAM_INPUT_1 = "input1";
-const char* PARAM_INPUT_2 = "input2";
-const char* PARAM_INPUT_3 = "input3";
+
 
 AsyncWebServer server(80);
 
@@ -26,17 +26,8 @@ void initEndpoints(){
     if (request->hasParam(PARAM_INPUT_1)) {
       inputMessage = request->getParam(PARAM_INPUT_1)->value();
       inputParam = PARAM_INPUT_1;
-    }
-    // GET input2 value on <ESP_IP>/get?input2=<inputMessage>
-    else if (request->hasParam(PARAM_INPUT_2)) {
-      inputMessage = request->getParam(PARAM_INPUT_2)->value();
-      inputParam = PARAM_INPUT_2;
-    }
-    // GET input3 value on <ESP_IP>/get?input3=<inputMessage>
-    else if (request->hasParam(PARAM_INPUT_3)) {
-      inputMessage = request->getParam(PARAM_INPUT_3)->value();
-      inputParam = PARAM_INPUT_3;
-    }
+      val = inputMessage.toInt();
+    }    
     else {
       inputMessage = "No message sent";
       inputParam = "none";
@@ -46,7 +37,14 @@ void initEndpoints(){
                                      + inputParam + ") with value: " + inputMessage +
                                      "<br><a href=\"/\">Return to Home Page</a>");
   });
+
+
+
   server.onNotFound(notFound);
   server.begin();
 }
 
+int readInputVal(){
+    Serial.println(val);
+return val;
+}

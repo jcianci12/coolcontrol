@@ -1,7 +1,7 @@
 #include <ESP32Servo.h>
 #include "WiFi.h"
 #include <ESPAsyncWebServer.h>
-#include <servoFunctions.h>
+//#include <servoFunctions.h>
 #include <endpoints.h>
 
 
@@ -14,6 +14,7 @@ int potPin = 34;    // GPIO pin used to connect the potentiometer (analog in)
 int ADC_Max = 4096; // This is the default ADC max value on the ESP32 (12 bit ADC width);
                     // this width can be set (in low-level oode) from 9-12 bits, for a
                     // a range of max values of 512-4096
+
 
 
 

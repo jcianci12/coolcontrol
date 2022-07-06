@@ -47,16 +47,29 @@ void setup()
  initialise();
 }
 
-
+int getMappedValue(){
+  return map(val, 0, 1023, 0, 80);
+}
 
 void loop()
 {
+
+  int val = readInputVal();
   //val = analogRead(potPin);       // reads the value of the potentiometer (value between 0 and 1023)
-  val = map(val, 0, 1023, 0, 80); // scale it to use it with the servo (value between 0 and 180)
-  myservo.write(val);
+  //mappedval = map(val, 0, 1023, 0, 80); // scale it to use it with the servo (value between 0 and 180)
+    Serial.println("val");
+
+  Serial.println(val);
+    Serial.println("mapped");
+  Serial.println(getMappedValue());
+
+  myservo.write(getMappedValue());
+  
+
   //Serial.println(val); // sets the servo position according to the scaled value
-  delay(15);         // waits for the servo to get there
+  delay(1000);         // waits for the servo to get there
 }
+
 
 
 
