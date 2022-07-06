@@ -67,10 +67,22 @@ void setup()
 }
 
 void loop() {
-  val = analogRead(potPin);            // read the value of the potentiometer (value between 0 and 1023)
-  Serial.println("Pot val"+val);
-  Serial.println("Map:" + ADC_Max);
-  val = map(val, 0, ADC_Max, 0, 360);     // scale it to use it with the servo (value between 0 and 180)
-  myservo.write(val);                  // set the servo position according to the scaled value
-  delay(200);                          // wait for the servo to get there
+  val = analogRead(potPin);            // reads the value of the potentiometer (value between 0 and 1023)
+  val = map(val, 0, 1023, 0, 80);     // scale it to use it with the servo (value between 0 and 180)
+  myservo.write(val);                  // sets the servo position according to the scaled value
+  delay(15);                           // waits for the servo to get there
 }
+
+void runToCloseAndStop(){
+
+}
+
+void runToClose(){
+
+}
+
+void runToOpen(){
+
+}
+
+
