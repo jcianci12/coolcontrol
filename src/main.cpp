@@ -48,7 +48,7 @@ void setup()
 }
 
 int getMappedValue(){
-  return map(val, 0, 1023, 0, 80);
+  return map(val, 0, 2000, 0, 180);
 }
 
 void loop()

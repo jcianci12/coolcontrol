@@ -1,123 +1,152 @@
 
 const char index_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html><head>
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
     <title>ESP Input Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head><body>
-    
-<div class="slidecontainer">
-    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-    <p>Value: <span id="demo"></span></p>
+</head>
 
-</div>
-<style>
-    .slidecontainer {
-        width: 100%;
-        /* Width of the outside container */
-    }
+<body>
 
-    /* The slider itself */
-    .slider {
-        -webkit-appearance: none;
-        /* Override default CSS styles */
-        appearance: none;
-        width: 100%;
-        /* Full-width */
-        height: 25px;
-        /* Specified height */
-        background: #d3d3d3;
-        /* Grey background */
-        outline: none;
-        /* Remove outline */
-        opacity: 0.7;
-        /* Set transparency (for mouse-over effects on hover) */
-        -webkit-transition: .2s;
-        /* 0.2 seconds transition on hover */
-        transition: opacity .2s;
-    }
+    <div class="slidecontainer">
+        <input type="range" min="0" max="2000" value="1000" class="slider" id="myRange">
+        <h1>Value: <span id="demo"></span></h1>
 
-    /* Mouse-over effects */
-    .slider:hover {
-        opacity: 1;
-        /* Fully shown on mouse-over */
-    }
+    </div>
+    <style>
+        .slidecontainer {
+            width: 100%;
+            /* Width of the outside container */
+        }
 
-    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-    .slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        /* Override default look */
-        appearance: none;
-        width: 25px;
-        /* Set a specific slider handle width */
-        height: 25px;
-        /* Slider handle height */
-        background: #04AA6D;
-        /* Green background */
-        cursor: pointer;
-        /* Cursor on hover */
-    }
+        /* The slider itself */
+        .slider {
+            -webkit-appearance: none;
+            /* Override default CSS styles */
+            appearance: none;
+            width: 100%;
+            /* Full-width */
+            height: 25px;
+            /* Specified height */
+            background: #d3d3d3;
+            /* Grey background */
+            outline: none;
+            /* Remove outline */
+            opacity: 0.7;
+            /* Set transparency (for mouse-over effects on hover) */
+            -webkit-transition: .2s;
+            /* 0.2 seconds transition on hover */
+            transition: opacity .2s;
+        }
 
-    .slider::-moz-range-thumb {
-        width: 25px;
-        /* Set a specific slider handle width */
-        height: 25px;
-        /* Slider handle height */
-        background: #04AA6D;
-        /* Green background */
-        cursor: pointer;
-        /* Cursor on hover */
-    }
-</style>
-<script>
-    var slider = document.getElementById("myRange");
-    var output = document.getElementById("demo");
-    output.innerHTML = slider.value; // Display the default slider value
+        /* Mouse-over effects */
+        .slider:hover {
+            opacity: 1;
+            /* Fully shown on mouse-over */
+        }
 
-    // Update the current slider value (each time you drag the slider handle)
-    slider.onchange = function () {
-        output.innerHTML = this.value;
-        post("/update", { input1: this.value },"post")
+        /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            /* Override default look */
+            appearance: none;
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: #04AA6D;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
 
-    }
-    /**
-     * sends a request to the specified url from a form. this will change the window location.
-     * @param {string} path the path to send the post request to
-     * @param {object} params the parameters to add to the url
-     * @param {string} [method=post] the method to use on the form
-     */
-    function post(path, params, method ) {
+        .slider::-moz-range-thumb {
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: #04AA6D;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
+    </style>
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        var value;
+        output.innerHTML = slider.value; // Display the default slider value
 
-        // The rest of this code assumes you are not using a library.
-        // It can be made less verbose if you use one.
-        const form = document.createElement('form');
-        form.method = method;
-        form.action = path;
+        // Update the current slider value (each time you drag the slider handle)
+        slider.oninput = function () {
+            value = this.value
+            output.innerHTML = value;
 
-        // // collect the form data while iterating over the inputs
-        // var data = {};
-        // for (var i = 0, ii = form.length; i < ii; ++i) {
-        //     var input = form[i];
-        //     if (input.name) {
-        //         data[input.name] = input.value;
-        //     }
-        // }
+           processChanges()
 
-        document.body.appendChild(form);
-        //form.submit();
-        // construct an HTTP request
-        var xhr = new XMLHttpRequest();
-        xhr.open(form.method, form.action, true);
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        }
 
-        // send the collected data as JSON
-        xhr.send(JSON.stringify(params));
+        function debounce(func, timeout = 50) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+        const processChanges = debounce(() => postData());
 
-        xhr.onloadend = function () {
-            // done
-        };
-    }
+        function postData() {
+            post("/update", { input1: this.value }, "post")
 
-</script>
+        }
+        /**
+         * sends a request to the specified url from a form. this will change the window location.
+         * @param {string} path the path to send the post request to
+         * @param {object} params the parameters to add to the url
+         * @param {string} [method=post] the method to use on the form
+         */
+        function post(path, params, method) {
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less verbose if you use one.
+            const form = document.createElement('form');
+            form.method = method;
+            form.action = path;
+
+            // // collect the form data while iterating over the inputs
+            // var data = {};
+            // for (var i = 0, ii = form.length; i < ii; ++i) {
+            //     var input = form[i];
+            //     if (input.name) {
+            //         data[input.name] = input.value;
+            //     }
+            // }
+
+            document.body.appendChild(form);
+            //form.submit();
+            // construct an HTTP request
+            var xhr = new XMLHttpRequest();
+            xhr.open(form.method, form.action, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+            // send the collected data as JSON
+            xhr.send(JSON.stringify(params));
+
+            xhr.onloadend = function () {
+                // done
+            };
+        }
+
+    </script>
 </body>
+
 </html>
+
+
+
+
 )rawliteral";
