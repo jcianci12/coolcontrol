@@ -1,3 +1,8 @@
+<!DOCTYPE HTML><html><head>
+    <title>ESP Input Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head><body>
+    
 <div class="slidecontainer">
     <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
     <p>Value: <span id="demo"></span></p>
@@ -69,7 +74,7 @@
     // Update the current slider value (each time you drag the slider handle)
     slider.onchange = function () {
         output.innerHTML = this.value;
-        post("/get/",{input1: this.value})
+        post("/update", { input1: this.value },"post")
 
     }
     /**
@@ -78,7 +83,7 @@
      * @param {object} params the parameters to add to the url
      * @param {string} [method=post] the method to use on the form
      */
-    function post(path, params, method = 'post') {
+    function post(path, params, method ) {
 
         // The rest of this code assumes you are not using a library.
         // It can be made less verbose if you use one.
@@ -86,19 +91,30 @@
         form.method = method;
         form.action = path;
 
-        for (const key in params) {
-            if (params.hasOwnProperty(key)) {
-                const hiddenField = document.createElement('input');
-                hiddenField.type = 'hidden';
-                hiddenField.name = key;
-                hiddenField.value = params[key];
-
-                form.appendChild(hiddenField);
-            }
-        }
+        // // collect the form data while iterating over the inputs
+        // var data = {};
+        // for (var i = 0, ii = form.length; i < ii; ++i) {
+        //     var input = form[i];
+        //     if (input.name) {
+        //         data[input.name] = input.value;
+        //     }
+        // }
 
         document.body.appendChild(form);
-        form.submit();
+        //form.submit();
+        // construct an HTTP request
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        // send the collected data as JSON
+        xhr.send(JSON.stringify(params));
+
+        xhr.onloadend = function () {
+            // done
+        };
     }
 
 </script>
+</body>
+</html>

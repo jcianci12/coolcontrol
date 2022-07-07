@@ -1,11 +1,9 @@
 #include <ESP32Servo.h>
 #include "WiFi.h"
-#include <ESPAsyncWebServer.h>
 //#include <servoFunctions.h>
 #include <endpoints.h>
 
 
-Servo myservo; // create servo object to control a servo
 
 // Possible PWM GPIO pins on the ESP32: 0(used by on-board button),2,4,5(used by on-board LED),12-19,21-23,25-27,32-33
 int servoPin = 18; // GPIO pin used to connect the servo control (digital out)

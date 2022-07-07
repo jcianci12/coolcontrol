@@ -1,3 +1,9 @@
+#include <ESPAsyncWebServer.h>
+#include <ArduinoJson.h>
+
+
+Servo myservo; // create servo object to control a servo
+
 int val; // variable to read the value from the analog pin
 
 // void runServo(){
