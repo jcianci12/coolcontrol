@@ -1,7 +1,8 @@
 #include <ESP32Servo.h>
-#include "WiFi.h"
+// #include "WiFi.h"
 //#include <servoFunctions.h>
 #include <endpoints.h>
+#include <wifisetupmanager.h>
 
 
 
@@ -21,39 +22,11 @@ void initialise()
 
     Serial.begin(115200);
 
-    // Init WiFi as Station, start SmartConfig
-    WiFi.mode(WIFI_AP_STA);
-
-
-
-    WiFi.beginSmartConfig();
-
-
-
-    // Wait for SmartConfig packet from mobile
-    Serial.println("Waiting for SmartConfig.");
-    while (!WiFi.smartConfigDone())
-    {
-        delay(500);
-        Serial.print(".");
-    }
+    initWIFI();
 
     Serial.println("");
-    Serial.println("SmartConfig received.");
+ 
 
-    // Wait for WiFi to connect to AP
-    Serial.println("Waiting for WiFi");
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(500);
-        Serial.print(".");
-    }
-
-    Serial.println("WiFi Connected.");
-    #define CONFIG_ESP32_WIFI_NVS_ENABLED = 1;
-
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
     initEndpoints();
 
     // Allow allocation of all timers

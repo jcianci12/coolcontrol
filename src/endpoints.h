@@ -1,15 +1,14 @@
-#include <ESPAsyncWebServer.h>
+  #include <ESPAsyncWebServer.h>
 #include <form.h>
 #include <servoFunctions.h>
-#include "AsyncJson.h"
-#include "ArduinoJson.h"
+ #include "AsyncJson.h"
 
 const char *PARAM_INPUT_1 = "input1";
+AsyncWebServer server(80);
 
 // const size_t CAPACITY = JSON_OBJECT_SIZE(5);
 // StaticJsonDocument<CAPACITY> doc;
 
-AsyncWebServer server(80);
 
 void notFound(AsyncWebServerRequest *request)
 {
