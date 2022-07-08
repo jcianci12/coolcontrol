@@ -23,7 +23,12 @@ void initialise()
 
     // Init WiFi as Station, start SmartConfig
     WiFi.mode(WIFI_AP_STA);
+
+
+
     WiFi.beginSmartConfig();
+
+
 
     // Wait for SmartConfig packet from mobile
     Serial.println("Waiting for SmartConfig.");
@@ -45,6 +50,7 @@ void initialise()
     }
 
     Serial.println("WiFi Connected.");
+    #define CONFIG_ESP32_WIFI_NVS_ENABLED = 1;
 
     Serial.print("IP Address: ");
     Serial.println(WiFi.localIP());
@@ -56,7 +62,7 @@ void initialise()
     ESP32PWM::allocateTimer(2);
     ESP32PWM::allocateTimer(3);
     myservo.setPeriodHertz(50);           // Standard 50hz servo
-    myservo.attach(servoPin, 1000, 2000); // attaches the servo on pin 18 to the servo object
+    myservo.attach(servoPin, 500, 2400); // attaches the servo on pin 18 to the servo object
                                           // using SG90 servo min/max of 500us and 2400us
                                           // for MG995 large servo, use 1000us and 2000us,
                                           // which are the defaults, so this line could be
