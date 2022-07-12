@@ -21,16 +21,14 @@ void initEndpoints()
               { 
                 Serial.println("request received!");
                 request->send_P(200, "text/html", index_html); });
+                // Send web page with input fields to client
+    server.on("/reset", HTTP_GET, [](AsyncWebServerRequest *request)
+              { 
+                Serial.println("request received!");
+                //resetwifi();
+                request->send_P(200, "text/html", index_html); });
 
-    // Send a GET request to <ESP_IP>/update?output=<inputMessage1>&state=<inputMessage2>
-
-    //    AsyncCallbackJsonWebHandler* handler = new AsyncCallbackJsonWebHandler("/update", [](AsyncWebServerRequest *request, JsonVariant &json) {
-
-    //   doc = json.as<JsonObject>();
-    //   String world = doc[PARAM_INPUT_1];
-    // val = world.toInt();
-    //   // ...
-    // });
+   
 
     server.onRequestBody(
         [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)

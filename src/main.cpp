@@ -47,7 +47,7 @@ void setup()
 
 int getMappedValue()
 {
-  return map(newval, 0, 2000, 0, 180);
+  return map(newval, 0, 100, 0, 180);
 }
 void spinservo()
 {
@@ -67,18 +67,18 @@ void loop()
 {
   int newval = readInputVal();
 
-  Serial.println("newval ");Serial.print(newval);
+  //Serial.println("newval ");Serial.print(newval);
   
 
-  Serial.println("oldval ");Serial.print(oldval);
+  //Serial.println("oldval ");Serial.print(oldval);
   
 
   if (newval != oldval)
   {
-    Serial.println("Value changed, rotating servo.");
+    //Serial.println("Value changed, rotating servo.");
     spinservo();
     oldval = newval;
   }
-  delay(1000);
+  delay(50);
   // Serial.println(val); // sets the servo position according to the scaled value
 }

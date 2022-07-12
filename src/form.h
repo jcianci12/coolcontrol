@@ -13,10 +13,11 @@ const char index_html[] PROGMEM = R"rawliteral(
 <body>
 
     <div class="slidecontainer">
-        <input type="range" min="0" max="2000" value="1000" class="slider" id="myRange">
-        <h1>Value: <span id="demo"></span></h1>
+        <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+        <h1>Percent open: <span id="demo"></span></h1>
 
     </div>
+    <a href="reset">Reset. (This will reset the device and create a fresh access point that you can connect to in order to configure for a new WiFi.)</a>
     <style>
         .slidecontainer {
             width: 100%;
@@ -90,7 +91,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 
         }
 
-        function debounce(func, timeout = 50) {
+        function debounce(func, timeout = 20) {
             let timer;
             return (...args) => {
                 clearTimeout(timer);
