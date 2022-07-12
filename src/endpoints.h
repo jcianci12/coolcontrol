@@ -44,9 +44,9 @@ void initEndpoints()
                 if (DeserializationError::Ok == deserializeJson(jsonDoc, (const char*)data))
                 {
                     JsonObject obj = jsonDoc.as<JsonObject>();
-                    val = obj[PARAM_INPUT_1];
+                    newval = obj[PARAM_INPUT_1];
                     Serial.println("value recieved");
-                    Serial.println(val);
+                    Serial.println(newval);
 
                     //LOG_INFO("%s", obj["test"].as<String>().c_str());
                 }
@@ -61,6 +61,6 @@ void initEndpoints()
 
 int readInputVal()
 {
-    Serial.println(val);
-    return val;
+    Serial.println(newval);
+    return newval;
 }

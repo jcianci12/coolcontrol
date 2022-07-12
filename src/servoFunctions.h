@@ -3,8 +3,8 @@
 
 Servo myservo; // create servo object to control a servo
 
-int val; // variable to read the value from the analog pin
-
+int newval; // variable to read the value from the analog pin
+int oldval;
 // void runServo(){
   
 // }

@@ -40,39 +40,45 @@
 #include <ESP32Servo.h>
 #include <setup.h>
 
-
-
 void setup()
 {
- initialise();
+  initialise();
 }
 
-int getMappedValue(){
-  return map(val, 0, 2000, 0, 180);
+int getMappedValue()
+{
+  return map(newval, 0, 2000, 0, 180);
+}
+void spinservo()
+{
+  myservo.attach(servoPin, 500, 2400); // attaches the servo on pin 18 to the servo object
+                                          // using SG90 servo min/max of 500us and 2400us
+                                          // for MG995 large servo, use 1000us and 2000us,
+                                          // which are the defaults, so this line could be
+                                          // "myservo.attach(servoPin);"
+  Serial.println("mapped");
+  Serial.println(getMappedValue());
+  myservo.write(getMappedValue());
+  delay(1000);
+  myservo.detach();
 }
 
 void loop()
 {
+  int newval = readInputVal();
 
-  int val = readInputVal();
-  //val = analogRead(potPin);       // reads the value of the potentiometer (value between 0 and 1023)
-  //mappedval = map(val, 0, 1023, 0, 80); // scale it to use it with the servo (value between 0 and 180)
-    Serial.println("val");
-
-  Serial.println(val);
-    Serial.println("mapped");
-  Serial.println(getMappedValue());
-
-  myservo.write(getMappedValue());
+  Serial.println("newval ");Serial.print(newval);
   
 
-  //Serial.println(val); // sets the servo position according to the scaled value
-  delay(1000);         // waits for the servo to get there
+  Serial.println("oldval ");Serial.print(oldval);
+  
+
+  if (newval != oldval)
+  {
+    Serial.println("Value changed, rotating servo.");
+    spinservo();
+    oldval = newval;
+  }
+  delay(1000);
+  // Serial.println(val); // sets the servo position according to the scaled value
 }
-
-
-
-
-
-
-
