@@ -1,10 +1,6 @@
-  #include <ESPAsyncWebServer.h>
-#include <form.h>
-#include <servoFunctions.h>
- #include "AsyncJson.h"
+ 
 
-const char *PARAM_INPUT_1 = "input1";
-AsyncWebServer server(80);
+#include <endpointheader.h>
 
 // const size_t CAPACITY = JSON_OBJECT_SIZE(5);
 // StaticJsonDocument<CAPACITY> doc;
