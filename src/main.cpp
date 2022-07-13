@@ -3,13 +3,14 @@
 // Include the ESP32 Arduino Servo Library instead of the original Arduino Servo Library
 #include <ESP32Servo.h>
 #include <setup.h>
-
+Endpoints endpoints(0,0);
 void setup()
 {
-  initialise();
+  initialise(endpoints);
+  
 }
 
-int getMappedValue()
+int getMappedValue(int newval)
 {
   return map(
     newval  //the value that we want to 'map'
@@ -27,16 +28,16 @@ void spinservo()
                                           // which are the defaults, so this line could be
                                           // "myservo.attach(servoPin);"
   Serial.println("mapped");
-  Serial.println(getMappedValue());
-  myservo.write(getMappedValue());
+  int val = endpoints.getNewVal();
+  Serial.println(getMappedValue(val));
+  myservo.write(getMappedValue(val));
   delay(1000);
   myservo.detach();//detach the servo once we have run it to the value. stops it humming.
 }
 
 void loop()
 {
-  // int newval = readInputVal();
-  int newval = Endpoints::readInputVal();
+  int newval = endpoints.getNewVal();
 
 
   //Serial.println("newval ");Serial.print(newval);
@@ -45,11 +46,11 @@ void loop()
   //Serial.println("oldval ");Serial.print(oldval);
   
 
-  if (newval != oldval)
+  if (newval != endpoints.getOldVal())
   {
     //Serial.println("Value changed, rotating servo.");
     spinservo();
-    oldval = newval;
+    endpoints.setOldVal(newval);
   }
   delay(50);
   // Serial.println(val); // sets the servo position according to the scaled value

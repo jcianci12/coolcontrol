@@ -7,14 +7,45 @@ AsyncWebServer server(80);
 
 Servo myservo; // create servo object to control a servo
 
-int newval; // variable to read the value from the analog pin
-int oldval;
+// int newval; // variable to read the value from the analog pin
+// int oldval;
 // const size_t CAPACITY = JSON_OBJECT_SIZE(5);
 // StaticJsonDocument<CAPACITY> doc;
 
 class Endpoints
 {
+
+private:
+    static int newval;
+    static int oldval;
+
 public:
+    Endpoints() {}
+    Endpoints(int n, int o)
+    {
+        newval = n;
+        oldval = o;
+    }
+    int getNewVal()
+    {
+        return newval;
+    }
+
+    void setNewVal(int val)
+    {
+        newval = val;
+    }
+
+    int getOldVal()
+    {
+        return oldval;
+    }
+
+    void setOldVal(int val)
+    {
+        oldval = val;
+    }
+
     void InitEndpoints()
     {
         // Send web page with input fields to client
@@ -55,8 +86,7 @@ public:
         server.begin();
     }
 
-public:
-    static int readInputVal()
+    int readInputVal()
     {
         Serial.println(newval);
         return newval;

@@ -1,4 +1,3 @@
-#include <ESP32Servo.h>
 // #include "WiFi.h"
 //#include <servoFunctions.h>
 #include <endpoints.h>
@@ -12,7 +11,7 @@ int ADC_Max = 4096; // This is the default ADC max value on the ESP32 (12 bit AD
                     // this width can be set (in low-level oode) from 9-12 bits, for a
                     // a range of max values of 512-4096
 
-void initialise()
+void initialise(Endpoints endpoints)
 {
 
     Serial.begin(115200);
@@ -22,7 +21,7 @@ void initialise()
     Serial.println("");
 
     //initEndpoints();
-    Endpoints endpoints;
+    // Endpoints endpoints(0,0);
     endpoints.InitEndpoints();
 
     // Allow allocation of all timers
