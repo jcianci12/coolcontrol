@@ -11,7 +11,13 @@ void setup()
 
 int getMappedValue()
 {
-  return map(newval, 0, 100, 0, 180);
+  return map(
+    newval  //the value that we want to 'map'
+  , 0       //the low end of the current scale
+  , 100     //the high end of the current scale
+  , 0       //the low end of the scale we want to map our value to
+  , 180     //the high end of the scale we want to map our value to
+  );
 }
 void spinservo()
 {
@@ -24,7 +30,7 @@ void spinservo()
   Serial.println(getMappedValue());
   myservo.write(getMappedValue());
   delay(1000);
-  myservo.detach();
+  myservo.detach();//detach the servo once we have run it to the value. stops it humming.
 }
 
 void loop()
