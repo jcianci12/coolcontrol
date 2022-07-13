@@ -35,7 +35,9 @@ void spinservo()
 
 void loop()
 {
-  int newval = readInputVal();
+  // int newval = readInputVal();
+  int newval = Endpoints::readInputVal();
+
 
   //Serial.println("newval ");Serial.print(newval);
   

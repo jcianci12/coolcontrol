@@ -21,7 +21,9 @@ void initialise()
 
     Serial.println("");
 
-    initEndpoints();
+    //initEndpoints();
+    Endpoints endpoints;
+    endpoints.InitEndpoints();
 
     // Allow allocation of all timers
     ESP32PWM::allocateTimer(0);
