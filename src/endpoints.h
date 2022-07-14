@@ -5,6 +5,7 @@
 
 const char *PARAM_INPUT_1 = "input1";
 
+
 Servo myservo; // create servo object to control a servo
 
 int newval; // variable to read the value from the analog pin
