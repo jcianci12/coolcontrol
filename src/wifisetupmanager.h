@@ -10,7 +10,6 @@ DNSServer dns;
 AsyncWiFiManager wifiManager(&server, &dns);
 void initWIFI()
 {
-
     // WiFiManager, Local intialization. Once its business is done, there is no need to keep it around
     // WiFiManager
     // Local intialization. Once its business is done, there is no need to keep it around
