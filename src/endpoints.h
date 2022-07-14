@@ -1,9 +1,9 @@
 #include <ESPAsyncWebServer.h>
 #include <form.h>
 #include "AsyncJson.h"
+#include <wifisetupmanager.h>
 
 const char *PARAM_INPUT_1 = "input1";
-AsyncWebServer server(80);
 
 Servo myservo; // create servo object to control a servo
 
@@ -28,7 +28,7 @@ void initEndpoints()
     server.on("/reset", HTTP_GET, [](AsyncWebServerRequest *request)
               { 
                 Serial.println("request received!");
-                //resetwifi();
+                wifiManager.resetSettings();
                 request->send_P(200, "text/html", index_html); });
 
    
