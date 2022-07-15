@@ -1,4 +1,7 @@
 
+#ifndef FORM
+#define FORM
+
 const char index_html[] PROGMEM = R"rawliteral(
 
 
@@ -151,3 +154,5 @@ const char index_html[] PROGMEM = R"rawliteral(
 
 
 )rawliteral";
+
+#endif

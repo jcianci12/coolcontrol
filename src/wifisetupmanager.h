@@ -1,13 +1,27 @@
+
+
+#ifndef SERVER
+#define SERVER
 #include <WiFi.h>
-// needed for library
 #include <ESPAsyncWebServer.h>
 #include <ESPAsyncWiFiManager.h>
-#ifndef WIFIMANAGER
-#define WIFIMANAGER
 AsyncWebServer server(80);
 DNSServer dns;
 
+#endif
+
+#ifndef WIFISETUP
+#define WIFISETUP
+// needed for library
+
+#include <endpoints.h>
+
+#ifndef WIFIMANAGER
+#define WIFIMANAGER
 AsyncWiFiManager wifiManager(&server, &dns);
+#endif
+
+
 void initWIFI()
 {
     // WiFiManager, Local intialization. Once its business is done, there is no need to keep it around
@@ -20,11 +34,14 @@ void initWIFI()
     // fetches ssid and pass from eeprom and tries to connect
     // if it does not connect it starts an access point with the specified name
     // here  "AutoConnectAP"
+    WiFi.setHostname("CoolControl");
     // and goes into a blocking loop awaiting configuration
-    wifiManager.autoConnect("AutoConnectAP");
+    wifiManager.autoConnect("CoolControl");
     // or use this for auto generated name ESP + ChipID
     // wifiManager.autoConnect();
     // if you get here you have connected to the WiFi
-    Serial.println("connected...yeey :)");
+    // Serial.println("connected...yeey :)");
+
+    initEndpoints();
 }
 #endif
